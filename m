@@ -4,28 +4,16 @@ set -e
 
 echo "Installing dependencies..."
 sudo apt-get update
-sudo apt-get install -y wget xdg-utils
+sudo apt-get install -y wget libfuse2t64
 
-echo "Opening MoreLogin download page..."
-xdg-open "https://www.morelogin.com/download" || true
+echo "Downloading MoreLogin AppImage..."
+cd /tmp
 
-echo ""
-echo "Download the Linux Desktop .deb installer."
-echo "Save it to your Downloads folder."
-echo ""
-read -rp "Press ENTER when the download finishes..."
+wget --show-progress -O MoreLogin.AppImage \
+"https://get.morelogin.com/client/prod/linux/x64/2.54.0/MoreLogin_x86_64_2.54.0.AppImage"
 
-DEB=$(find "$HOME/Downloads" -type f \
-  -iname '*morelogin*.deb' \
-  -printf '%T@ %p\n' | sort -nr | head -1 | cut -d' ' -f2-)
-
-if [ -z "$DEB" ]; then
-    echo "MoreLogin .deb file not found."
-    exit 1
-fi
-
-echo "Installing $DEB..."
-sudo apt-get install -y "$DEB"
+echo "Making MoreLogin executable..."
+chmod +x MoreLogin.AppImage
 
 echo "Launching MoreLogin..."
-/opt/MoreLogin/MoreLogin
+./MoreLogin.AppImage
