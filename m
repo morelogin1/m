@@ -18,4 +18,4 @@ wget -O MoreLogin.AppImage \
 chmod +x MoreLogin.AppImage
 
 echo "Launching MoreLogin..."
-./MoreLogin.AppImage
+./MoreLogin.AppImage --no-sandbox
